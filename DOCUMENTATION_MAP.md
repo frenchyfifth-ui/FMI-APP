@@ -6,6 +6,11 @@ This document prevents documentation drift and defines the authority of file pat
 - **EXECUTION_KERNEL.md** (Canonical) - The absolute laws.
 - **WORLD_CONSTRAINTS_V0.txt** (Reference) - The cheat sheet.
 
+## Operational Workflows
+- **PROMPT_LIBRARY/** - Canonical definitions for AI Agents (Governance, Logging, Kernel).
+- **BUFFER_INPUTS/** - Staging area. Nothing here is canonical until promoted.
+- **JOURNEY_LOGS/** - The audit trail. Read-only history.
+
 ## Human Systems
 - **02_system_layers/human_layer.md** (Operational constraints)
 - **99_appendix/integrated_family_field_protocol.md** (Field application)

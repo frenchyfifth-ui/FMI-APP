@@ -22,6 +22,9 @@ All work in this repository follows strict execution rules:
 - **Hypothesis:** `01_hypothesis/` (Core Assumptions)
 - **System Layers:** `02_system_layers/` (Human, AI, Energy constraints)
 - **Orchestration:** `03_ai_orchestration/` (AI Prompts)
+- **Prompt Library:** `PROMPT_LIBRARY/` (Google Studio Agent Definitions)
+- **Input Buffer:** `BUFFER_INPUTS/` (Staging Area for Expert Inputs)
+- **Journey Logs:** `JOURNEY_LOGS/` (Chronological Decision Records)
 - **Appendix:** `99_appendix/` (Field Protocols & Self-Propagation)
 
 ## License
