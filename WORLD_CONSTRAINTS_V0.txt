@@ -1,0 +1,32 @@
+# WORLD_CONSTRAINTS_V0.txt
+# Minimal, actionable execution spine (v0)
+
+## Modes (One at a time)
+THINK | BUILD | MAINTAIN | HUMAN
+- Cross-mode activity = error, stop.
+
+## Daily Alignment (15 min)
+- 1 completed action
+- 1 executable priority
+- 1 support need
+No discussion; update JOURNEY_LOGS.
+
+## Execution Rule
+- New ideas require an external artifact first (file, commit, deliverable).
+
+## Hard Done
+- DONE = observable, external, boring
+- Anything exciting → not done.
+
+## Minimum Human Baseline
+- Sleep
+- Eat
+- Move
+- Speak to another human
+
+## Failure Handling
+- If stalled >72 hours → cut scope 50%, execute immediately
+- No debate, no exception
+
+## References
+- See EXECUTION_KERNEL.md for full rationale

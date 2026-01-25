@@ -1,20 +1,28 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
+# FMI Execution Kernel (Stage 01)
 
-# Run and deploy your AI Studio app
+## System Status
+- **Runtime:** Active (React Application)
+- **Governance:** `EXECUTION_KERNEL.md` (Locked)
+- **Stage:** S01 (Foundation)
 
-This contains everything you need to run your app locally.
+## Abstract
+This repository houses both the **Execution Runtime** (the software interface) and the **Documentation Foundation** (the operating system constraints) for the Mascarene Refuge Hypothesis S01.
 
-View your app in AI Studio: https://ai.studio/apps/drive/1_U9z4tdP2B6G-QsCt8HqIvvZmEjYIYDQ
+## Execution Governance
+All work in this repository follows strict execution rules:
 
-## Run Locally
+1.  **[EXECUTION_KERNEL.md](./EXECUTION_KERNEL.md)** → Full governance, rationale, and operational philosophy.
+2.  **[WORLD_CONSTRAINTS_V0.txt](./WORLD_CONSTRAINTS_V0.txt)** → Minimal, actionable spine; modes, hard-done, daily skeleton, and failure handling.
+3.  **[DOCUMENTATION_MAP.md](./DOCUMENTATION_MAP.md)** → Map of truth for all system layers.
 
-**Prerequisites:**  Node.js
+## Repository Structure
+- **Runtime:** `index.html`, `App.tsx`, `components/` (The Interface)
+- **Governance:** `EXECUTION_KERNEL.md`, `WORLD_CONSTRAINTS_V0.txt`
+- **Context:** `00_context/` (Problem & Scope)
+- **Hypothesis:** `01_hypothesis/` (Core Assumptions)
+- **System Layers:** `02_system_layers/` (Human, AI, Energy constraints)
+- **Orchestration:** `03_ai_orchestration/` (AI Prompts)
+- **Appendix:** `99_appendix/` (Field Protocols & Self-Propagation)
 
-
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+## License
+Creative Commons Attribution-ShareAlike 4.0 (CC BY-SA 4.0).
