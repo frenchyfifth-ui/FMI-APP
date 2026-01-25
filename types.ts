@@ -11,7 +11,7 @@ export interface Artifact {
   description: string;
   timestamp: number;
   mode: SystemMode;
-  type: 'CODE' | 'DOC' | 'DECISION' | 'PHYSICAL';
+  type: 'CODE' | 'DOC' | 'DECISION' | 'PHYSICAL' | 'VIDEO';
   isExternal: boolean; // Must be observable/external
 }
 

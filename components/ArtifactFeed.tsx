@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Artifact, SystemMode } from '../types';
+import { commitJourneyLog, downloadLocally } from '../services/githubService';
 
 interface ArtifactFeedProps {
   artifacts: Artifact[];
@@ -10,20 +11,49 @@ const ArtifactFeed: React.FC<ArtifactFeedProps> = ({ artifacts, onAddArtifact })
   const [title, setTitle] = useState('');
   const [desc, setDesc] = useState('');
   const [type, setType] = useState<Artifact['type']>('DOC');
+  const [isCommitting, setIsCommitting] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!title.trim()) return;
 
-    onAddArtifact({
+    setIsCommitting(true);
+
+    const newArtifactData = {
       title,
       description: desc,
-      mode: SystemMode.BUILD, // Default, logic usually handled by parent based on current mode
+      mode: SystemMode.BUILD, // In real app, pass current mode
       type,
       isExternal: true
+    };
+
+    // Attempt GitHub commit
+    // We create a temp object just for the API call signature
+    const tempArtifact: Artifact = {
+      ...newArtifactData,
+      id: "pending",
+      timestamp: Date.now(),
+      mode: SystemMode.BUILD
+    };
+
+    const synced = await commitJourneyLog(tempArtifact);
+    
+    // Always add to local feed, but mark if it was synced or not
+    onAddArtifact({
+      ...newArtifactData,
+      isExternal: synced
     });
+    
     setTitle('');
     setDesc('');
+    setIsCommitting(false);
+  };
+
+  const handleDownload = (art: Artifact) => {
+    const date = new Date(art.timestamp).toISOString().split('T')[0];
+    const filename = `${date}_${art.title.replace(/\s+/g, '_')}.md`;
+    const content = `# JOURNEY LOG: ${art.title}\n\n**Date:** ${date}\n**Description:** ${art.description}\n**Type:** ${art.type}`;
+    downloadLocally(filename, content);
   };
 
   return (
@@ -40,8 +70,19 @@ const ArtifactFeed: React.FC<ArtifactFeedProps> = ({ artifacts, onAddArtifact })
             type="text" 
             value={title}
             onChange={(e) => setTitle(e.target.value)}
-            className="w-full bg-fmi-panel border border-fmi-border text-white px-3 py-2 font-mono text-sm focus:border-white outline-none"
+            disabled={isCommitting}
+            className="w-full bg-fmi-panel border border-fmi-border text-white px-3 py-2 font-mono text-sm focus:border-white outline-none disabled:opacity-50"
             placeholder="e.g. EXECUTION_KERNEL.md"
+          />
+        </div>
+        <div className="mb-3">
+          <label className="block text-xs font-mono text-gray-500 mb-1">DESCRIPTION / CONTEXT</label>
+          <textarea 
+            value={desc}
+            onChange={(e) => setDesc(e.target.value)}
+            disabled={isCommitting}
+            className="w-full bg-fmi-panel border border-fmi-border text-white px-3 py-2 font-mono text-xs focus:border-white outline-none h-16 resize-none disabled:opacity-50"
+            placeholder="Why was this built? What problem does it solve?"
           />
         </div>
         <div className="flex gap-2 mb-3">
@@ -58,13 +99,11 @@ const ArtifactFeed: React.FC<ArtifactFeedProps> = ({ artifacts, onAddArtifact })
         </div>
         <button 
           type="submit"
-          className="w-full bg-white text-black font-mono font-bold text-sm py-2 hover:bg-gray-200 transition-colors"
+          disabled={isCommitting}
+          className="w-full bg-white text-black font-mono font-bold text-sm py-2 hover:bg-gray-200 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          COMMIT ARTIFACT (DONE)
+          {isCommitting ? 'SYNCING...' : 'COMMIT LOG ENTRY'}
         </button>
-        <p className="text-[10px] text-gray-600 font-mono mt-2 text-center">
-          * Must be observable, external, and boring.
-        </p>
       </form>
 
       {/* List */}
@@ -73,16 +112,26 @@ const ArtifactFeed: React.FC<ArtifactFeedProps> = ({ artifacts, onAddArtifact })
           <div className="text-gray-600 text-sm font-mono text-center py-4">NO ARTIFACTS SHIPPED. SYSTEM STALLED?</div>
         )}
         {[...artifacts].reverse().map((art) => (
-          <div key={art.id} className="border-l-2 border-gray-600 pl-3 py-1">
+          <div key={art.id} className="border-l-2 border-gray-600 pl-3 py-1 group hover:border-white transition-colors relative">
             <div className="flex justify-between items-center mb-1">
               <span className="text-xs font-mono text-gray-400">
                 {new Date(art.timestamp).toLocaleTimeString()}
               </span>
-              <span className="text-[10px] font-mono border border-gray-700 px-1 rounded text-gray-400">
-                {art.type}
-              </span>
+              <div className="flex gap-2 items-center">
+                <span className="text-[10px] font-mono border border-gray-700 px-1 rounded text-gray-400">
+                  {art.type}
+                </span>
+                <button 
+                  onClick={() => handleDownload(art)}
+                  className="text-[10px] font-mono bg-gray-800 hover:bg-white hover:text-black px-2 rounded text-gray-400 transition-colors"
+                  title="Download Markdown to Disk"
+                >
+                  ⬇ SAVE
+                </button>
+              </div>
             </div>
             <h4 className="text-sm font-bold text-gray-200">{art.title}</h4>
+            <div className="text-[10px] text-gray-500 mb-1 truncate">{art.description}</div>
             <div className="flex gap-2 mt-1">
               <span className={`text-[10px] font-mono px-1 rounded ${
                 art.mode === SystemMode.BUILD ? 'bg-mode-build/20 text-mode-build' :
@@ -90,6 +139,9 @@ const ArtifactFeed: React.FC<ArtifactFeedProps> = ({ artifacts, onAddArtifact })
                 'bg-gray-700 text-gray-300'
               }`}>
                 {art.mode}
+              </span>
+              <span className={`text-[10px] font-mono ${art.isExternal ? 'text-green-500' : 'text-gray-500'}`}>
+                 {art.isExternal ? '● SYNCED' : '○ LOCAL'}
               </span>
             </div>
           </div>

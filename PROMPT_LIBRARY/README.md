@@ -7,7 +7,8 @@ These prompts are designed to be used in **Google Studio** or compatible LLM int
 
 ## Agent Roster
 
-1.  **[FOUNDATION_PIPELINE_AGENT](./FOUNDATION_PIPELINE_AGENT.md)** - The Meta-Agent orchestrating the full lifecycle.
+0.  **[STUDIO_MASTER_WORKFLOW](./STUDIO_MASTER_WORKFLOW.md)** - **START HERE.** The Master Prompt that orchestrates Agents 1-6.
+1.  **[FOUNDATION_PIPELINE_AGENT](./FOUNDATION_PIPELINE_AGENT.md)** - The Meta-Agent for general pipeline orchestration.
 2.  **[GOVERNANCE_AGENT](./GOVERNANCE_AGENT.md)** - Enforces repo structure and naming.
 3.  **[INPUT_BUFFER_AGENT](./INPUT_BUFFER_AGENT.md)** - Ingests external expert knowledge securely.
 4.  **[EXECUTION_KERNEL_AGENT](./EXECUTION_KERNEL_AGENT.md)** - Validates "Definition of Done".
