@@ -29,3 +29,7 @@ All work in this repository follows strict execution rules:
 
 ## License
 Creative Commons Attribution-ShareAlike 4.0 (CC BY-SA 4.0).
+
+SPDX-License-Identifier: CC-BY-SA-4.0
+
+Governs repo execution discipline: see EXECUTION_KERNEL.md
