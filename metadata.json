@@ -1,0 +1,5 @@
+{
+  "name": "FMI Execution Kernel",
+  "description": "A constraint-first operating system for high-capacity cognitive execution, implementing the FMI protocols and Execution Kernel.",
+  "requestFramePermissions": []
+}
