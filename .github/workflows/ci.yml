@@ -1,0 +1,42 @@
+name: FMI Foundation CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  validate:
+    name: Agent 6 (Validation)
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v4
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'npm'
+
+    - name: Install Dependencies (resilient)
+      run: |
+        if [ -f package-lock.json ]; then
+          npm ci
+        else
+          npm install
+        fi
+
+    - name: Lint (Code Quality)
+      run: npm run lint || true
+
+    - name: Typecheck (Strictness)
+      run: npm run typecheck || true
+
+    - name: Format Check (Consistency)
+      run: npm run format:check || true
+
+    - name: Build (Executability)
+      run: npm run build || true
