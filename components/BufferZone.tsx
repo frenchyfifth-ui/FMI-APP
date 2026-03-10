@@ -7,6 +7,7 @@ interface BufferZoneProps {
   items: BufferItem[];
   onAddItem: (item: BufferItem) => void;
   onUpdateItem: (item: BufferItem) => void;
+  onClear: () => void;
 }
 
 const BufferZone: React.FC<BufferZoneProps> = ({ items, onAddItem, onUpdateItem }) => {
@@ -86,6 +87,15 @@ const BufferZone: React.FC<BufferZoneProps> = ({ items, onAddItem, onUpdateItem 
            >
              KERNEL REJECTIONS
            </button>
+           {viewFilter === 'ACTIVE' && items.length > 0 && (
+             <button
+               onClick={onClear}
+               className="text-[10px] px-2 py-1 rounded font-mono bg-gray-700 text-gray-300 hover:bg-gray-600"
+               title="Empty the buffer"
+             >
+               CLEAR
+             </button>
+           )}
         </div>
       </div>
 

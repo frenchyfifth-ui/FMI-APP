@@ -97,6 +97,11 @@ const App: React.FC = () => {
     setBufferItems(prev => [item, ...prev]);
   };
 
+  // clear entire buffer (used for manual resets or after export)
+  const handleClearBuffer = () => {
+    setBufferItems([]);
+  };
+
   const handleUpdateBufferItem = (updatedItem: BufferItem) => {
     setBufferItems(prev => prev.map(i => i.id === updatedItem.id ? updatedItem : i));
   };
@@ -240,6 +245,7 @@ const App: React.FC = () => {
                 items={bufferItems} 
                 onAddItem={handleAddBufferItem} 
                 onUpdateItem={handleUpdateBufferItem}
+                onClear={() => handleClearBuffer()}
               />
             </div>
             <div className="lg:col-span-4 space-y-6">

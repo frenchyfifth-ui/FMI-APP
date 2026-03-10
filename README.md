@@ -17,6 +17,7 @@ All work in this repository follows strict execution rules:
 
 ## Repository Structure
 - **Runtime:** `index.html`, `App.tsx`, `components/` (The Interface)
+  - *Latest update:* buffer zone now includes a one‑click **CLEAR** button to reset inputs when the ACTIVE stream is empty or after export.
 - **Governance:** `EXECUTION_KERNEL.md`, `WORLD_CONSTRAINTS_V0.txt`
 - **Context:** `00_context/` (Problem & Scope)
 - **Hypothesis:** `01_hypothesis/` (Core Assumptions)
